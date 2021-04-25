@@ -97,7 +97,7 @@ from  Zona
 --where Estado=1 AND codubigeo=1 order by CODZONA desc   --a. Ordenados por codzona de mayor a menor
 --where Estado=1 AND codubigeo=1 order by nombre desc    --b. Ordenados por nombre alfabéticamente Z-A
 --where   estado=0 OR codubigeo=1 order by estado asc    --c. Ordenados por estado de menor a mayor
-/*where   estado=0 OR codubigeo=1 
+/*where   estado=1 OR codubigeo=1 
 order by codubigeo desc,                                 --d. Ordenados por codubigeo de mayor a menor en 1° nivel y 
 		 nombre asc		                           */	 --   nombre de manera alfabética A-Z en 2° nivel
 --where NOT(estado=1 AND codubigeo=1)      
