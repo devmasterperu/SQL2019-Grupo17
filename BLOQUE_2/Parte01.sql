@@ -100,5 +100,22 @@ from  Zona
 /*where   estado=0 OR codubigeo=1 
 order by codubigeo desc,                                 --d. Ordenados por codubigeo de mayor a menor en 1° nivel y 
 		 nombre asc		                           */	 --   nombre de manera alfabética A-Z en 2° nivel
-where NOT(estado=1 AND codubigeo=1)                      --e. Ordenados por codzona de menor a mayor.
-order by codzona asc
+--where NOT(estado=1 AND codubigeo=1)      
+where NOT(estado=1) OR NOT(codubigeo=1)     
+order by codzona asc                                     --e. Ordenados por codzona de menor a mayor.
+
+--02.09
+
+select * from Cliente
+
+--02.10
+
+select codtipo as TIPO_DOC,numdoc as NUM_DOC,razon_social as RAZON_SOCIAL,codzona as CODZONA,fec_inicio as FEC_INICIO,tipo_cliente
+from Cliente
+--where tipo_cliente='E' and (codzona=1 or codzona=3 or codzona=5 or codzona=7)
+/*a.Tipo_cliente=’E’ [Y] codzona de valor 1,3,5 o 7 ordenados alfabéticamente Z-A por razón_social*/
+--where tipo_cliente='E' and codzona in (1,3,5,7) 
+/*b.Tipo_cliente=’E’ [Y] fec_inicio desde el ‘01/01/1998’ al ‘31/12/1998’ 
+ordenados por fec_inicio del más reciente al más antiguo*/
+where tipo_cliente='E' and fec_inicio between '1998-01-01' and '1998-12-31'
+order by RAZON_SOCIAL desc
