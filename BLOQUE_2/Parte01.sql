@@ -110,7 +110,9 @@ select * from Cliente
 
 --02.10
 
-select codtipo as TIPO_DOC,numdoc as NUM_DOC,razon_social as RAZON_SOCIAL,codzona as CODZONA,fec_inicio as FEC_INICIO,tipo_cliente
+select IIF(codtipo=3,'RUC','OTRO') as TIPO_DOC,
+case when codtipo=3 then 'RUC' else 'OTRO' end as TIPO_DOC_2,
+numdoc as NUM_DOC,razon_social as RAZON_SOCIAL,codzona as CODZONA,fec_inicio as FEC_INICIO,tipo_cliente
 from Cliente
 --where tipo_cliente='E' and (codzona=1 or codzona=3 or codzona=5 or codzona=7)
 /*a.Tipo_cliente=’E’ [Y] codzona de valor 1,3,5 o 7 ordenados alfabéticamente Z-A por razón_social*/
