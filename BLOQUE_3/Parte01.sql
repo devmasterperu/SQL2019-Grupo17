@@ -72,3 +72,13 @@ direccion as DIRECCION,
 z.nombre as ZONA
 from Cliente c,TipoDocumento t,Zona z
 where c.tipo_cliente='P' and c.estado=1 and c.codtipo=t.codtipo and c.codzona=z.codzona
+
+select * from Contrato co
+inner join Cliente c on co.codcliente=c.codcliente
+inner join Zona z on c.codzona=z.codzona
+
+--03.06
+
+select * from Telefono t
+inner join Cliente c on t.codcliente=c.codcliente --and t.estado=1 and c.tipo_cliente='E'
+where t.estado=1 and c.tipo_cliente='E'
