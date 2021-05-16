@@ -109,3 +109,55 @@ from Telefono t
 left join Cliente c on t.codcliente=c.codcliente --and t.estado=1
 where t.estado=1 
 
+--03.10
+
+--LEFT JOIN
+select co.codcliente as 'CODIGO CLIENTE',isnull(p.nombre,'SIN DATO') as 'NOMBRE PLAN',
+isnull(p.precioref,0.00) as 'PRECIO PLAN',
+co.preciosol as 'PRECIO CONTRATO',co.fec_contrato as 'FECHA CONTRATO'
+from Contrato co
+left join PlanInternet p on co.codplan=p.codplan
+order by p.nombre asc
+
+--RIGHT JOIN
+select co.codcliente as 'CODIGO CLIENTE',isnull(p.nombre,'SIN DATO') as 'NOMBRE PLAN',
+isnull(p.precioref,0.00) as 'PRECIO PLAN',
+co.preciosol as 'PRECIO CONTRATO',co.fec_contrato as 'FECHA CONTRATO'
+from PlanInternet p 
+right join Contrato co on co.codplan=p.codplan
+order by p.nombre asc
+
+--03.12
+
+select isnull(c.codcliente,0) as 'CLIENTE_CODCLIENTE',
+	  case 
+	  when c.tipo_cliente='P' then concat(rtrim(ltrim(c.nombres)),' ',rtrim(ltrim(c.ape_paterno)),' ',rtrim(ltrim(c.ape_materno)))
+	  when c.tipo_cliente='E' then c.razon_social
+	  else 'SIN DATO' 
+	  end as 'CLIENTE NOMBRE',
+	  lower(isnull(c.email,'SIN DATO')) as 'CLIENTE CORREO',
+	  isnull(co.codcliente,0) as 'CONTRATO CODLCLIENTE',
+	  isnull(p.nombre,'SIN DATO') as 'CONTRATO PLAN',
+	  isnull(co.fec_contrato,'9999-12-31') as 'CONTRATO FECHA'
+/*mostrarse los clientes independientemente de contar o no con contratos relacionados y los contratos,
+independientemente de contar o no con clientes relacionados*/
+from Contrato co
+full join Cliente c on co.codcliente=c.codcliente 
+/*contratos independientemente de contar con plan de internet relacionado*/
+left join PlanInternet p on co.codplan=p.codplan
+order by isnull(co.codcliente,0) asc
+
+
+--SELF_JOIN
+USE TSQL
+go
+
+--ALTER TABLE [HR].[Employees]  WITH CHECK ADD  CONSTRAINT [FK_Employees_Employees] FOREIGN KEY([mgrid])
+--REFERENCES [HR].[Employees] ([empid])
+--GO
+
+--Relación de empleados y jefes
+
+select emp1.empid,emp1.lastname,emp1.firstname,emp1.title,emp2.lastname,emp2.firstname,emp2.title
+from HR.Employees emp1
+left join HR.Employees emp2 on emp1.mgrid=emp2.empid
