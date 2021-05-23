@@ -53,12 +53,34 @@ from   Contrato
 --05.03
 
 select replace(upper(nombre),' ','_') as [PLAN],p.codplan,
-	   (select count(*) from Contrato co) as TOTAL_0,
-       (select count(*) from Contrato co where co.codplan=p.codplan) as TOTAL,
+	   (select count(*) from Contrato co) as TOTAL_0,                         --CI
+       (select count(*) from Contrato co where co.codplan=p.codplan) as TOTAL,--CI
 	   case 
 		when (select count(*) from Contrato co where co.codplan=p.codplan) between 0  and  99 then 'Plan de baja demanda'
 		when (select count(*) from Contrato co where co.codplan=p.codplan) between 100 and 199 then 'Plan de mediana demanda'
-		when (select count(*) from Contrato co where co.codplan=p.codplan)>200 then 'Plan de alta demanda'
+		when (select count(*) from Contrato co where co.codplan=p.codplan)>=200 then 'Plan de alta demanda'
 		else 'No es posible el mensaje'
-		end as MENSAJE
-from   PlanInternet p
+		end as MENSAJE--CI
+from   PlanInternet p --CE
+
+--05.05
+
+select cast(round(8*1.00/3,2) as decimal(6,2))
+
+select replace(upper(nombre),' ','_') as [PLAN],p.codplan,
+       (select count(*) from Contrato co where co.codplan=p.codplan) as TOTAL_P, --CI
+	   (select count(*) from Contrato co) as TOTAL,                              --CI
+	   cast(
+		   round(
+			   (select count(*) from Contrato co where co.codplan=p.codplan)*100.00/
+			   (select count(*) from Contrato co),
+			   2)
+		   as decimal(6,2)
+	   )
+	   as PORCENTAJE
+from   PlanInternet p --CE
+
+--05.06
+
+select desc_larga as TIPO_DOCUMENTO,320,899,cast(round(320*100.00/899,2) as decimal(6,2))
+from TipoDocumento
